@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Form, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FrameworkService } from './service/framework.service';
+
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,12 @@ import { Form, FormArray, FormBuilder, FormGroup, Validators } from '@angular/fo
 })
 
 
-export class AppComponent {
+export class AppComponent implements OnInit {
+  framewoks: any;
+
+  frameworksName: string[] = [];
+  selectedFramework: string = '';
+  frameworksVersion: string[] = [];
 
   profileForm = this.fb.group({
     firstName: ['fffff', Validators.required],
@@ -16,7 +23,7 @@ export class AppComponent {
     dateOfBirth: ['11-11-15', Validators.required],
     framework: ['', Validators.required],
     frameworkVersion: ['', Validators.required],
-    email: ['dsd@dsa', [Validators.required, Validators.email]],
+    email: ['dsd@dsa', [Validators.required, Validators.email], []],
 
     hobbyName: this.fb.array([
       this.fb.control('', Validators.required)
@@ -26,6 +33,19 @@ export class AppComponent {
     ])
   });
 
+  constructor(private fb: FormBuilder, private framewoksService: FrameworkService) { 
+       
+   }
+
+   ngOnInit(): void {
+    this.framewoksService.getFrameworks().subscribe((data: any) => {
+      this.framewoks = Object.assign({}, data);
+      this.frameworksName = Object.keys(data)
+    });
+   }
+
+  
+
   get hobbyName() {
     return this.profileForm.get('hobbyName') as FormArray;
   }
@@ -33,24 +53,7 @@ export class AppComponent {
   get hobbyDuration() {
     return this.profileForm.get('hobbyDuration') as FormArray;
   }
-   
-  public framewoks: any = {
-    angular: ['1.1.1', '1.2.1', '1.3.3'],
-    react: ['2.1.2', '3.2.4', '4.3.1'],
-    vue: ['3.3.1', '5.2.1', '5.1.3'],
-  }
-
-  public frameworksName = Object.keys(this.framewoks);
-  public selectedFramework: string = '';
-  public frameworksVersion: string[] = [];
   
-
-  constructor(private fb: FormBuilder) { 
-    // this.selectedFramework = '';
-   }
-
- 
-
   addHobby() {
     this.hobbyName.push(this.fb.control(''));
     this.hobbyDuration.push(this.fb.control(''));
@@ -65,5 +68,11 @@ export class AppComponent {
     this.frameworksVersion = this.framewoks[this.selectedFramework];
     // console.log(this.frameworksVersion);
   }
+
+  
+  checkSuchEmail() {
+
+  }
+
 
 } 
