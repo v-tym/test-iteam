@@ -13,14 +13,13 @@
 
   <div>
     <label for="framework">Фреймворк</label>
-    <select id="framework" name="framework" formControlName="framework">
+    <select id="framework" name="framework" (change)="onClickFramework()" [(ngModel)]="selectedFramework" formControlName="framework">
       <option *ngFor="let item of frameworksName" value="{{item}}" selected>{{item}}</option>
-    </select>
-    <label for="framework-version">framework ersion</label>
+    </select>    
+
+    <label for="framework-version">framework version</label>
     <select id="framework-version" name="frameworkVersion" formControlName="frameworkVersion">
-      <option value="1.1" selected>1.1</option>
-      <option value="1.21">1.21</option>
-      <option value="1.31">1.31</option>
+      <option *ngFor="let item of frameworksVersion" value="{{item}}" selected>{{item}}</option>          
     </select>
   </div>
 
@@ -49,5 +48,6 @@
 </form>
 
 <hr>
+<button type="button" (click)="onClickFramework()">aaa</button>
 
 <p>Form Value: {{ profileForm.value | json }}</p>

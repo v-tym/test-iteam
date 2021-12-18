@@ -34,17 +34,22 @@ export class AppComponent {
     return this.profileForm.get('hobbyDuration') as FormArray;
   }
    
-  public framewoks = {
+  public framewoks: any = {
     angular: ['1.1.1', '1.2.1', '1.3.3'],
     react: ['2.1.2', '3.2.4', '4.3.1'],
     vue: ['3.3.1', '5.2.1', '5.1.3'],
   }
 
   public frameworksName = Object.keys(this.framewoks);
+  public selectedFramework: string = '';
+  public frameworksVersion: string[] = [];
+  
 
   constructor(private fb: FormBuilder) { 
-    
+    // this.selectedFramework = '';
    }
+
+ 
 
   addHobby() {
     this.hobbyName.push(this.fb.control(''));
@@ -54,6 +59,11 @@ export class AppComponent {
   onSubmit() {
     // TODO: Use EventEmitter with form value
     console.warn(this.profileForm.value);
+  }
+
+  onClickFramework () {
+    this.frameworksVersion = this.framewoks[this.selectedFramework];
+    // console.log(this.frameworksVersion);
   }
 
 } 
