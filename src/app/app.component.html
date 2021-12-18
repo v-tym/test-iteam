@@ -14,9 +14,7 @@
   <div>
     <label for="framework">Фреймворк</label>
     <select id="framework" name="framework" formControlName="framework">
-      <option value="angular" selected>angular</option>
-      <option value="angular2">angular2</option>
-      <option value="angular3">angular3</option>
+      <option *ngFor="let item of frameworksName" value="{{item}}" selected>{{item}}</option>
     </select>
     <label for="framework-version">framework ersion</label>
     <select id="framework-version" name="frameworkVersion" formControlName="frameworkVersion">
@@ -53,70 +51,3 @@
 <hr>
 
 <p>Form Value: {{ profileForm.value | json }}</p>
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- 
-<form [formGroup]="myForm" (ngSubmit)="submit()">
-  <div>
-    <label>Имя</label>
-    <input type="text" name="firstName" formControlName="firstName">
-  </div> 
-  <div>
-    <label>Фамилия</label>
-    <input type="text" name="lastName" formControlName="lastName">
-  </div> 
-  <div>
-    <label>День Рождения</label>
-    <input type="text" name="dateOfBirth" formControlName="dateOfBirth">
-  </div>
-  <div>
-    <label>Фреймворка</label>
-    <select name="framework" formControlName="framework">
-      <option value="angular" selected>angular</option>
-      <option value="angular2">angular2</option>
-      <option value="angular3">angular3</option>
-    </select>
-    <select name="frameworkVersion" formControlName="frameworkVersion">
-      <option value="1.1" selected>1.1</option>
-      <option value="1.21">1.21</option>
-      <option value="1.31">1.31</option>
-    </select>
-  </div>
-
-  <div>
-    <label>Email</label>
-    <input type="text" name="email" formControlName="email">
-  </div>
-
-  <div formArrayName="hobbys">
-    <div formGroupName="hobby">
-      <legend>hobby</legend>  
-      <label>hobby Name</label> 
-      <input type="text" name="hobbyName" formControlName="name">
-      <label>hobby Duration</label>
-      <input type="text" name="hobbyDuration" formControlName="duration">
-    </div>
-    
- </div>
-
-
-
- 
-
-  <button (onclick)="addForm()"> add hobby</button>
-
-  <button [disabled]="myForm.invalid">
-    Отправить
-  </button>
-  
-</form> -->
