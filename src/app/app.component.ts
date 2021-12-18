@@ -20,11 +20,18 @@ export class AppComponent {
 
     hobbyName: this.fb.array([
       this.fb.control('')
+    ]),
+    hobbyDuration: this.fb.array([
+      this.fb.control('')
     ])
   });
 
   get hobbyName() {
     return this.profileForm.get('hobbyName') as FormArray;
+  }
+
+  get hobbyDuration() {
+    return this.profileForm.get('hobbyDuration') as FormArray;
   }
 
   // profileForm = this.formBuilder.group({    
@@ -62,6 +69,7 @@ export class AppComponent {
 
   addHobby() {
     this.hobbyName.push(this.fb.control(''));
+    this.hobbyDuration.push(this.fb.control(''));
   }
 
   onSubmit() {

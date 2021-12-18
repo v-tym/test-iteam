@@ -27,15 +27,20 @@
   </div>
 
   
-
+  <h2>Hobby</h2>
   <div formArrayName="hobbyName">
-    <h2>hobbyName</h2>
-    
-
     <div *ngFor="let hobbyName of hobbyName.controls; let i=index">
       <!-- The repeated hobbyName template -->
-      <label for="hobbyName-{{ i }}">Hobby Name:</label>
+      <label for="hobbyName-{{ i }}">Hobby Name {{i}}:</label>
       <input id="hobbyName-{{ i }}" type="text" [formControlName]="i">
+    </div>
+  </div>
+
+  <div formArrayName="hobbyDuration">
+    <div *ngFor="let hobbyDuration of hobbyDuration.controls; let i=index">
+      <!-- The repeated hobbyName template -->
+      <label for="hobbyDuration-{{ i }}">Hobby Duration {{i}}:</label>
+      <input id="hobbyDuration-{{ i }}" type="text" [formControlName]="i">
     </div>
   </div>
   
