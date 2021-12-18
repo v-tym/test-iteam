@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Form, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +9,23 @@ import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 
 export class AppComponent {
+
+  profileForm = this.fb.group({
+    firstName: ['fffff', Validators.required],
+    lastName: ['llln', Validators.required],
+    dateOfBirth: ['11-11-15', Validators.required],
+    framework: ['fr'],
+    frameworkVersion: [''],
+    email: ['dsd@dsa', [Validators.required, Validators.email]],
+
+    hobbyName: this.fb.array([
+      this.fb.control('')
+    ])
+  });
+
+  get hobbyName() {
+    return this.profileForm.get('hobbyName') as FormArray;
+  }
 
   // profileForm = this.formBuilder.group({    
   //   firstName: ['Tom', Validators.required],
@@ -27,7 +44,7 @@ export class AppComponent {
   //     state: [''],
   //     zip: ['']
   //   }),
-  //   aliases: this.formBuilder.array([
+  //   hobbyName: this.formBuilder.array([
   //     this.formBuilder.control('')
   //   ])
   // });
@@ -39,32 +56,17 @@ export class AppComponent {
     vue: ['3.3.1', '5.2.1', '5.1.3'],
   } 
 
-  myForm: FormGroup;
+;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private fb: FormBuilder) {  }
 
-    this.myForm = formBuilder.group({
-      "firstName": ["Tom", [Validators.required]],
-      "lastName": ["Pupkin", [Validators.required]],
-      "dateOfBirth": ["22-12-21", [Validators.required]],
-      "framework": ["", [ Validators.required]],
-      "frameworkVersion": ["", [ Validators.required]],      
-      "email": ["dsa@ddd", [ Validators.required, Validators.email]],
-      
-      "hobby": this.formBuilder.group ({
-        "name": [["dsa", Validators.required]],  
-        "duration": [["sda",  Validators.required]],
-      })   
-            
-    })
+  addHobby() {
+    this.hobbyName.push(this.fb.control(''));
   }
 
-  addForm() {
-    // this.myForm.addControl('hobby', new FormControl('', Validators.required));
+  onSubmit() {
+    // TODO: Use EventEmitter with form value
+    console.warn(this.profileForm.value);
   }
 
-  submit(){
-    console.log(this.myForm);
-  }
-
-}
+} 

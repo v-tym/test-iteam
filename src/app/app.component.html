@@ -1,3 +1,66 @@
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+  <label for="first-name">First Name: </label>
+  <input id="first-name" type="text" formControlName="firstName" required>
+
+  <label for="last-name">Last Name: </label>
+  <input id="last-name" type="text" formControlName="lastName">
+
+  <label for="date-of-birth">date Of Birth: </label>
+  <input id="date-of-birth" type="text" formControlName="dateOfBirth">
+
+  <label for="email">Email: </label>
+  <input id="email" type="text" formControlName="email">
+
+  <div>
+    <label for="framework">Фреймворк</label>
+    <select id="framework" name="framework" formControlName="framework">
+      <option value="angular" selected>angular</option>
+      <option value="angular2">angular2</option>
+      <option value="angular3">angular3</option>
+    </select>
+    <label for="framework-version">framework ersion</label>
+    <select id="framework-version" name="frameworkVersion" formControlName="frameworkVersion">
+      <option value="1.1" selected>1.1</option>
+      <option value="1.21">1.21</option>
+      <option value="1.31">1.31</option>
+    </select>
+  </div>
+
+  
+
+  <div formArrayName="hobbyName">
+    <h2>hobbyName</h2>
+    
+
+    <div *ngFor="let hobbyName of hobbyName.controls; let i=index">
+      <!-- The repeated hobbyName template -->
+      <label for="hobbyName-{{ i }}">Hobby Name:</label>
+      <input id="hobbyName-{{ i }}" type="text" [formControlName]="i">
+    </div>
+  </div>
+  
+  <button (click)="addHobby()" type="button">+ Add another hobbyName</button>
+
+  <p>Complete the form to enable button.</p>
+  <button type="submit" [disabled]="!profileForm.valid">Submit</button>
+</form>
+
+<hr>
+
+<p>Form Value: {{ profileForm.value | json }}</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
 <form [formGroup]="myForm" (ngSubmit)="submit()">
   <div>
     <label>Имя</label>
@@ -30,8 +93,8 @@
     <input type="text" name="email" formControlName="email">
   </div>
 
-  <!-- <div formArrayName="hobbys"> -->
-    <div formGroupName="hobbys">
+  <div formArrayName="hobbys">
+    <div formGroupName="hobby">
       <legend>hobby</legend>  
       <label>hobby Name</label> 
       <input type="text" name="hobbyName" formControlName="name">
@@ -39,7 +102,11 @@
       <input type="text" name="hobbyDuration" formControlName="duration">
     </div>
     
-  <!-- </div> -->
+ </div>
+
+
+
+ 
 
   <button (onclick)="addForm()"> add hobby</button>
 
@@ -47,4 +114,4 @@
     Отправить
   </button>
   
-</form>
+</form> -->
