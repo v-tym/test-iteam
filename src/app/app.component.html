@@ -10,6 +10,12 @@
 
   <label for="email">Email: </label>
   <input id="email" type="text" formControlName="email">
+  <div *ngIf="profileForm.controls['email'].invalid && profileForm.controls['email'].touched">
+    Некорректный email
+  </div>
+  <div *ngIf="isMailToken()">
+    Такой email уже есть
+  </div>
 
   <div>
     <label for="framework">Фреймворк</label>
@@ -27,7 +33,6 @@
   <h2>Hobby</h2>
   <div formArrayName="hobbyName">
     <div *ngFor="let hobbyName of hobbyName.controls; let i=index">
-      <!-- The repeated hobbyName template -->
       <label for="hobbyName-{{ i }}">Hobby Name {{i}}:</label>
       <input id="hobbyName-{{ i }}" type="text" [formControlName]="i">
     </div>
@@ -35,12 +40,10 @@
 
   <div formArrayName="hobbyDuration">
     <div *ngFor="let hobbyDuration of hobbyDuration.controls; let i=index">
-      <!-- The repeated hobbyName template -->
       <label for="hobbyDuration-{{ i }}">Hobby Duration {{i}}:</label>
       <input id="hobbyDuration-{{ i }}" type="text" [formControlName]="i">
     </div>
-  </div>
-  
+  </div>  
   
   <button (click)="addHobby()" type="button">+ Add another hobbyName</button>
 

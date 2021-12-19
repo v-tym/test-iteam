@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { FrameworkService } from './service/framework.service';
+import { MailService } from './service/mail.service';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { FrameworkService } from './service/framework.service';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [FrameworkService],
+  providers: [FrameworkService, MailService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

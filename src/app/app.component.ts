@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Form, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
+import { map, switchMap, timer } from 'rxjs';
 import { FrameworkService } from './service/framework.service';
+import { MailService } from './service/mail.service';
 
 
 @Component({
@@ -16,6 +18,19 @@ export class AppComponent implements OnInit {
   frameworksName: string[] = [];
   selectedFramework: string = '';
   frameworksVersion: string[] = [];
+  emails: any;
+
+  mailAsyncValidator = 
+  (authService: MailService) => {
+    return (input: FormControl) => {
+      return timer(2000).pipe(
+        switchMap(() => authService.checkEmail(input.value)),
+        map(res => {
+          return res.isLoginAvailable ? null : {emailExist: true}
+        })
+      );
+    };
+  };
 
   profileForm = this.fb.group({
     firstName: ['fffff', Validators.required],
@@ -23,7 +38,9 @@ export class AppComponent implements OnInit {
     dateOfBirth: ['11-11-15', Validators.required],
     framework: ['', Validators.required],
     frameworkVersion: ['', Validators.required],
-    email: ['dsd@dsa', [Validators.required, Validators.email], []],
+    email: ['test@test.test', [Validators.required, Validators.email], [this.mailAsyncValidator(this.mailService)]],
+    // email: ['dsd@dsa', [Validators.required, Validators.email]],
+
 
     hobbyName: this.fb.array([
       this.fb.control('', Validators.required)
@@ -33,14 +50,19 @@ export class AppComponent implements OnInit {
     ])
   });
 
-  constructor(private fb: FormBuilder, private framewoksService: FrameworkService) { 
+  constructor(private fb: FormBuilder,
+              private framewoksService: FrameworkService,
+              private mailService: MailService
+               ) { 
        
    }
 
    ngOnInit(): void {
     this.framewoksService.getFrameworks().subscribe((data: any) => {
       this.framewoks = Object.assign({}, data);
-      this.frameworksName = Object.keys(data)
+      this.frameworksName = Object.keys(data);
+      this.profileForm.valueChanges.subscribe( i => console.log(i));
+      this.profileForm.statusChanges.subscribe( i => console.log(i));
     });
    }
 
@@ -66,13 +88,9 @@ export class AppComponent implements OnInit {
 
   onClickFramework () {
     this.frameworksVersion = this.framewoks[this.selectedFramework];
-    // console.log(this.frameworksVersion);
   }
 
-  
-  checkSuchEmail() {
-
+  isMailToken(): any {
+    return this.profileForm.get('email')?.hasError('emailExist');
   }
-
-
 } 
