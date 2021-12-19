@@ -14,7 +14,6 @@ import { MailService } from './service/mail.service';
 
 export class AppComponent implements OnInit {
   framewoks: any;
-
   frameworksName: string[] = [];
   selectedFramework: string = '';
   frameworksVersion: string[] = [];
@@ -39,9 +38,6 @@ export class AppComponent implements OnInit {
     framework: ['', Validators.required],
     frameworkVersion: ['', Validators.required],
     email: ['', [Validators.required, Validators.email], [this.mailAsyncValidator(this.mailService)]],
-    // email: ['dsd@dsa', [Validators.required, Validators.email]],
-
-
     hobbyName: this.fb.array([
       this.fb.control('', Validators.required)
     ]),
@@ -52,8 +48,7 @@ export class AppComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private framewoksService: FrameworkService,
-              private mailService: MailService
-               ) { 
+              private mailService: MailService) { 
        
    }
 
@@ -61,12 +56,10 @@ export class AppComponent implements OnInit {
     this.framewoksService.getFrameworks().subscribe((data: any) => {
       this.framewoks = Object.assign({}, data);
       this.frameworksName = Object.keys(data);
-      this.profileForm.valueChanges.subscribe( i => console.log(i));
-      this.profileForm.statusChanges.subscribe( i => console.log(i));
+      // this.profileForm.valueChanges.subscribe( i => console.log(i));
+      // this.profileForm.statusChanges.subscribe( i => console.log(i));
     });
-   }
-
-  
+   }  
 
   get hobbyName() {
     return this.profileForm.get('hobbyName') as FormArray;
@@ -82,8 +75,10 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit() {
-    // TODO: Use EventEmitter with form value
-    console.warn(this.profileForm.value);
+    // TODO: Use EventEmitter with form value    
+    this.mailService.post(this.profileForm.value);
+    this.profileForm.reset();
+    // window.location.reload();
   }
 
   onClickFramework () {
