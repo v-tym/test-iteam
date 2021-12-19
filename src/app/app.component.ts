@@ -33,12 +33,12 @@ export class AppComponent implements OnInit {
   };
 
   profileForm = this.fb.group({
-    firstName: ['fffff', Validators.required],
-    lastName: ['llln', Validators.required],
+    firstName: ['', Validators.required],
+    lastName: ['', Validators.required],
     dateOfBirth: ["", Validators.required],
     framework: ['', Validators.required],
     frameworkVersion: ['', Validators.required],
-    email: ['test@test.test', [Validators.required, Validators.email], [this.mailAsyncValidator(this.mailService)]],
+    email: ['', [Validators.required, Validators.email], [this.mailAsyncValidator(this.mailService)]],
     // email: ['dsd@dsa', [Validators.required, Validators.email]],
 
 

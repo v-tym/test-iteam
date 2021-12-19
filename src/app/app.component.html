@@ -1,9 +1,18 @@
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-  <label for="first-name">First Name: </label>
-  <input id="first-name" type="text" formControlName="firstName" required>
+  <mat-form-field class="firstName" appearance="fill">
+    <mat-label>First Name:</mat-label>
+    <input matInput placeholder="Petro" value="First Name:" formControlName="firstName">
+  </mat-form-field>
+  <!-- <label for="first-name">First Name: </label>
+  <input id="first-name" type="text" formControlName="firstName" required> -->
+  
 
-  <label for="last-name">Last Name: </label>
-  <input id="last-name" type="text" formControlName="lastName">
+  <!-- <label for="last-name">Last Name: </label>
+  <input id="last-name" type="text" formControlName="lastName"> -->
+  <mat-form-field class="lastName" appearance="fill">
+    <mat-label>Last Name:</mat-label>
+    <input matInput placeholder="Pupkin" formControlName="lastName">
+  </mat-form-field>
 
   <!-- <label for="date-of-birth">date Of Birth: </label>
   <input id="date-of-birth" type="text" formControlName="dateOfBirth"> -->
@@ -21,30 +30,54 @@
     <!-- #enddocregion datepicker-actions -->
     </mat-form-field>
 
-  <label for="email">Email: </label>
+    <mat-form-field class="lastName" appearance="fill">
+      <mat-label>Email:</mat-label>
+      <mat-label *ngIf="profileForm.controls['email'].invalid && profileForm.controls['email'].touched">Некорректный email. </mat-label>
+      <mat-label *ngIf="isMailToken()">Такой email уже есть!</mat-label>      
+      <input matInput placeholder="test2@test.test" formControlName="email">
+    </mat-form-field>
+  <!-- <label for="email">Email: </label>
   <input id="email" type="text" formControlName="email">
   <div *ngIf="profileForm.controls['email'].invalid && profileForm.controls['email'].touched">
     Некорректный email
   </div>
   <div *ngIf="isMailToken()">
     Такой email уже есть
-  </div>
+  </div> -->
 
   <div>
-    <label for="framework">Фреймворк</label>
+    <mat-form-field class="framework" appearance="fill">
+      <mat-label>Фреймворк</mat-label>
+      <select matNativeControl required (change)="onClickFramework()" [(ngModel)]="selectedFramework" formControlName="framework">
+        <option *ngFor="let item of frameworksName" value="{{item}}">{{item}}</option>
+      </select>
+    </mat-form-field>
+    
+    <!-- <label for="framework">Фреймворк</label>
     <select id="framework" name="framework" (change)="onClickFramework()" [(ngModel)]="selectedFramework" formControlName="framework">
       <option *ngFor="let item of frameworksName" value="{{item}}" selected>{{item}}</option>
-    </select>    
+    </select>     -->
 
-    <label for="framework-version">framework version</label>
+    <mat-form-field class="framework-version" appearance="fill">
+      <mat-label>Framework version</mat-label>
+      <select matNativeControl required formControlName="frameworkVersion">
+        <option *ngFor="let item of frameworksVersion" value="{{item}}">{{item}}</option>
+      </select>
+    </mat-form-field>
+    <!-- <label for="framework-version">framework version</label>
     <select id="framework-version" name="frameworkVersion" formControlName="frameworkVersion">
       <option *ngFor="let item of frameworksVersion" value="{{item}}" selected>{{item}}</option>          
-    </select>
+    </select> -->
   </div>
 
   
   <h2>Hobby</h2>
+  
   <div formArrayName="hobbyName">
+    <!-- <mat-form-field class="hobbyName" appearance="fill"  *ngFor="let hobbyName of hobbyName.controls; let i=index">
+      <mat-label for="hobbyName-{{ i }}">Hobby Name {{i}}:</mat-label>
+      <input matInput placeholder="football" id="hobbyName-{{ i }}" type="text" [formControlName]="i">
+    </mat-form-field> -->
     <div *ngFor="let hobbyName of hobbyName.controls; let i=index">
       <label for="hobbyName-{{ i }}">Hobby Name {{i}}:</label>
       <input id="hobbyName-{{ i }}" type="text" [formControlName]="i">
