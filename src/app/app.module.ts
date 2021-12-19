@@ -6,6 +6,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { FrameworkService } from './service/framework.service';
 import { MailService } from './service/mail.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatNativeDateModule } from '@angular/material/core';
+import { MaterialExampleModule } from '../material.module';
+
+
 
 @NgModule({
   declarations: [
@@ -15,7 +21,11 @@ import { MailService } from './service/mail.service';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule,
+    MaterialExampleModule
+
   ],
   providers: [FrameworkService, MailService],
   bootstrap: [AppComponent]
